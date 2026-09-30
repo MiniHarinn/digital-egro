@@ -1735,6 +1735,7 @@ Sind evtl. die Namen der Variablen nicht eindeutig?</string>
     <string name="colorName_DISABLED">Deaktiviert</string>
     <string name="colorName_ASYNC">Asynchron</string>
     <string name="colorName_HIGHLIGHT">Hervorgehoben</string>
+    <string name="colorName_NET_HIGHLIGHT">Hervorgehobenes Netz</string>
 
     <string name="mod_insertWire">Leitung eingefügt.</string>
     <string name="mod_insertCopied">Aus Zwischenablage eingefügt.</string>

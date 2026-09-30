@@ -132,6 +132,12 @@ public final class Style {
             .setColor(ColorKey.HIGHLIGHT)
             .setEndCap(BasicStroke.CAP_ROUND)
             .build();
+    /**
+     * Used to highlight the net under the mouse, differs from the highlighting of a selection
+     */
+    public static final Style NET_HIGHLIGHT = new Builder(HIGHLIGHT)
+            .setColor(ColorKey.NET_HIGHLIGHT)
+            .build();
 
     /**
      * error color used for the circles to mark an element

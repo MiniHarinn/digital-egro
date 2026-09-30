@@ -29,6 +29,7 @@ public final class ColorScheme {
             .set(ColorKey.WIRE_Z, Color.GRAY)
             .set(ColorKey.PINS, Color.GRAY)
             .set(ColorKey.HIGHLIGHT, Color.CYAN)
+            .set(ColorKey.NET_HIGHLIGHT, Color.MAGENTA)
             .set(ColorKey.GRID, new Color(210, 210, 210))
             .set(ColorKey.PASSED, Color.GREEN)
             .set(ColorKey.ERROR, Color.RED)
@@ -50,6 +51,7 @@ public final class ColorScheme {
             .set(ColorKey.WIRE_LOW, new Color(0, 52, 0))
             .set(ColorKey.WIRE_OUT, new Color(250, 165, 0))
             .set(ColorKey.HIGHLIGHT, new Color(255, 255, 0))
+            .set(ColorKey.NET_HIGHLIGHT, new Color(204, 121, 167))
             .build();
 
     /**
@@ -166,7 +168,11 @@ public final class ColorScheme {
      * @return the color
      */
     public Color getColor(ColorKey key) {
-        return colors[key.ordinal()];
+        int i = key.ordinal();
+        // a custom scheme stored by an older version has no entries for newer keys
+        if (i < colors.length && colors[i] != null)
+            return colors[i];
+        return DEFAULT_SCHEME.colors[i];
     }
 
 
@@ -199,7 +205,8 @@ public final class ColorScheme {
          * @param colorScheme the color scheme used as default
          */
         public Builder(ColorScheme colorScheme) {
-            this.colors = colorScheme.colors.clone();
+            this();
+            set(colorScheme);
         }
 
         /**

@@ -673,6 +673,7 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
                             if (n != null) {
                                 removeHighLighted();
                                 addHighLighted(n.getWires());
+                                highLightStyle = Style.NET_HIGHLIGHT;
                                 toolTipHighlighted = true;
                             }
                         } catch (PinException e) {

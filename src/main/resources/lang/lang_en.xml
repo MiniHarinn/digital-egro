@@ -1717,6 +1717,7 @@
     <string name="colorName_DISABLED">Disabled</string>
     <string name="colorName_ASYNC">Asynchronous</string>
     <string name="colorName_HIGHLIGHT">Highlighted</string>
+    <string name="colorName_NET_HIGHLIGHT">Highlighted net</string>
 
     <string name="mod_insertWire">Inserted wire.</string>
     <string name="mod_insertCopied">Insert from clipboard.</string>
