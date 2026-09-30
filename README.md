@@ -236,6 +236,24 @@ If you want to build Digital from the source code:
 * Run `mvn site` to create a findbugs and a JaCoCo code coverage report.
 * Most IDEs (Eclipse, NetBeans, IntelliJ) are able to import the `pom.xml` to create a project.
 
+### Nix ###
+
+This repository is a flake. Run it directly with `nix run github:MiniHarinn/Digital-egro`,
+or get a shell with maven and a JDK for development with `nix develop`.
+
+To install it from your own flake, add it as an input:
+
+```nix
+inputs.digital-egro.url = "github:MiniHarinn/Digital-egro";
+inputs.digital-egro.inputs.nixpkgs.follows = "nixpkgs";
+```
+
+Then either use `inputs.digital-egro.packages.${pkgs.system}.default` directly, or add
+`inputs.digital-egro.overlays.default` to `nixpkgs.overlays` and use `pkgs.digital-egro`.
+
+If a dependency in `pom.xml` changes, set `mvnHash` in `nix/package.nix` to `lib.fakeHash`,
+run `nix build` and copy the correct hash from the error message.
+
 ## Contribution guidelines ##
 
 * If you want to contribute, please open a GitHub issue first.

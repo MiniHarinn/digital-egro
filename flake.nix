@@ -68,6 +68,8 @@
         {
           default = pkgs.mkShell {
             inputsFrom = [ pkgs.digital-egro ];
+            # maven brings its own JDK, but it is not on the PATH
+            packages = [ pkgs.jdk ];
           };
         }
       );
