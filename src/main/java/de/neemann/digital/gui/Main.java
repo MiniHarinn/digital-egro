@@ -255,6 +255,16 @@ public final class Main extends JFrame implements ClosingWindowListener.ConfirmS
         }.setToolTip(Lang.get("menu_componentPalette_tt")).setAcceleratorCTRLplus('K');
         // the accelerator of the menu item makes the shortcut work in the whole window
         librarySelector.setPaletteAction(showPalette);
+        // Tab opens the palette at the mouse, like in node editors such as Houdini or Nuke.
+        // Not while simulating, because keys can be mapped to buttons in the running circuit.
+        circuitComponent.setFocusTraversalKeysEnabled(false);
+        new ToolTipAction("componentPaletteTab") {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (model == null)
+                    showPalette.actionPerformed(actionEvent);
+            }
+        }.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0)).enableAcceleratorIn(circuitComponent);
         menuBar.add(librarySelector.buildMenu(insertHistory, circuitComponent));
 
         menuBar.add(WindowManager.getInstance().registerAndCreateMenu(this));

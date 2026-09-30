@@ -2034,7 +2034,7 @@ Sind evtl. die Namen der Variablen nicht eindeutig?</string>
     <string name="menu_find">Suchen</string>
     <string name="menu_find_tt">Durchsucht Bezeichnungen, Netznamen und Pinnummern.</string>
     <string name="menu_componentPalette">Schnell einfügen...</string>
-    <string name="menu_componentPalette_tt">Sucht ein Bauteil anhand seines Namens und hängt es an die Maus.</string>
+    <string name="menu_componentPalette_tt">Sucht ein Bauteil anhand seines Namens und hängt es an die Maus. Kann auch mit der Tab-Taste geöffnet werden.</string>
 
     <string name="menu_tutorial">Tutorial starten</string>
     <string name="menu_tutorial_tt">Startet das Anfänger-Tutorial.</string>

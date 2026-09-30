@@ -2016,7 +2016,7 @@
     <string name="menu_find">Find</string>
     <string name="menu_find_tt">Finds labels, net names and pin numbers.</string>
     <string name="menu_componentPalette">Quick insert...</string>
-    <string name="menu_componentPalette_tt">Search for a component by name and attach it to the mouse.</string>
+    <string name="menu_componentPalette_tt">Search for a component by name and attach it to the mouse. Can also be opened with the Tab key.</string>
 
     <string name="menu_tutorial">Start Tutorial</string>
     <string name="menu_tutorial_tt">Starts the beginner tutorial.</string>
