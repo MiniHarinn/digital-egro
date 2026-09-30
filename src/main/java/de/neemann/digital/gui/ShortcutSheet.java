@@ -94,6 +94,9 @@ public final class ShortcutSheet {
         row(ctrl + "+A", Lang.get("shortcut_selectAll"), false);
         row("← ↑ → ↓", Lang.get("shortcut_nudge"), true);
         row("F2", Lang.get("shortcut_rename"), true);
+        row(alt + "+A / D / W / S", Lang.get("shortcut_align"), true);
+        row(alt + "+H / V", Lang.get("shortcut_alignCenter"), true);
+        row(alt + "+Shift+H / V", Lang.get("shortcut_space"), true);
         row("R", Lang.get("menu_rotate"), false);
         row("Del", Lang.get("menu_delete"), false);
         row("+ / -", Lang.get("shortcut_plusMinus"), false);

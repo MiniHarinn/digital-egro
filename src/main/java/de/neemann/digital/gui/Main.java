@@ -984,6 +984,7 @@ public final class Main extends JFrame implements ClosingWindowListener.ConfirmS
         edit.add(circuitComponent.getCopyAction().createJMenuItem());
         edit.add(circuitComponent.getPasteAction().createJMenuItem());
         edit.add(circuitComponent.getRotateAction().createJMenuItem());
+        edit.add(SelectionActions.install(circuitComponent));
         edit.add(insertAsNew.createJMenuItem());
         edit.add(find.createJMenuItem());
         edit.addSeparator();
