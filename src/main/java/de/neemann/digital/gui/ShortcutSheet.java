@@ -104,6 +104,7 @@ public final class ShortcutSheet {
         row("S", Lang.get("shortcut_splitWire"), false);
         row("F", Lang.get("shortcut_flipWire"), false);
         row("D", Lang.get("shortcut_diagWire"), false);
+        row(Lang.get("shortcut_dropOnWire"), Lang.get("shortcut_dropOnWire_tt"), true);
 
         section(Lang.get("menu_view"));
         row("F1", Lang.get("menu_maximize"), false);

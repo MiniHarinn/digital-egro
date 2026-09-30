@@ -1729,6 +1729,7 @@
     <string name="mod_insertedElement_N">Component ''{0}'' inserted.</string>
     <string name="mod_deletedElement_N">Component ''{0}'' deleted.</string>
     <string name="mod_insertedWire">Wire inserted.</string>
+    <string name="mod_insertedIntoWire">Inserted into wire.</string>
     <string name="mod_movedSelected">Selection moved.</string>
     <string name="mod_undo_N">Undo: {0}</string>
     <string name="mod_redo_N">Redo: {0}</string>
@@ -2036,6 +2037,8 @@
     <string name="shortcut_splitWire">Split the wire under the mouse</string>
     <string name="shortcut_flipWire">While drawing a wire: flip its corner</string>
     <string name="shortcut_diagWire">While drawing a wire: switch between straight and diagonal</string>
+    <string name="shortcut_dropOnWire">drop on a wire</string>
+    <string name="shortcut_dropOnWire_tt">Place a component with an input and an output on a wire to insert it into the wire</string>
     <string name="shortcut_saveView">Save the current view</string>
     <string name="shortcut_restoreView">Go back to a saved view</string>
 

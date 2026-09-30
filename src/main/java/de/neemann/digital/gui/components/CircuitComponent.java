@@ -1895,6 +1895,7 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
             if (mouse.isPrimaryClick(e) && !isLocked()) {
                 modify(new ModifyInsertElement(element));
                 insertWires(element);
+                modify(WireInserter.create(getCircuit(), element)); // own undo step, so undo gives the old behaviour
             }
             if (!mouse.isClickModifier(e))
                 mouseNormal.activate();

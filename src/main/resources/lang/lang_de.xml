@@ -1747,6 +1747,7 @@ Sind evtl. die Namen der Variablen nicht eindeutig?</string>
     <string name="mod_insertedElement_N">Element ''{0}'' eingefügt.</string>
     <string name="mod_deletedElement_N">Element ''{0}'' entfernt.</string>
     <string name="mod_insertedWire">Leitung eingefügt.</string>
+    <string name="mod_insertedIntoWire">In Leitung eingefügt.</string>
     <string name="mod_movedSelected">Auswahl verschoben.</string>
     <string name="mod_undo_N">Rückgängig: {0}</string>
     <string name="mod_redo_N">Wiederherstellen: {0}</string>
@@ -2054,6 +2055,8 @@ Sind evtl. die Namen der Variablen nicht eindeutig?</string>
     <string name="shortcut_splitWire">Die Leitung unter der Maus auftrennen</string>
     <string name="shortcut_flipWire">Beim Zeichnen einer Leitung: die Ecke umklappen</string>
     <string name="shortcut_diagWire">Beim Zeichnen einer Leitung: zwischen gerade und diagonal wechseln</string>
+    <string name="shortcut_dropOnWire">Auf Leitung ablegen</string>
+    <string name="shortcut_dropOnWire_tt">Ein Bauteil mit Ein- und Ausgang auf einer Leitung ablegen, um es in die Leitung einzufügen</string>
     <string name="shortcut_saveView">Die aktuelle Ansicht speichern</string>
     <string name="shortcut_restoreView">Zu einer gespeicherten Ansicht zurückkehren</string>
 
