@@ -1771,6 +1771,8 @@ Sind evtl. die Namen der Variablen nicht eindeutig?</string>
     <string name="hint_moveSelected">R: drehen · Esc: abbrechen</string>
     <string name="hint_moveWire">Klick: ablegen · Entf: löschen · Esc: abbrechen</string>
     <string name="hint_run">Strg+R: Simulation beenden</string>
+    <string name="menu_transpose">Zeile / Spalte vertauschen</string>
+    <string name="msg_alignWouldConnect">Nicht verschoben: würde andere Leitung verbinden</string>
     <string name="mod_insertedIntoWire">In Leitung eingefügt.</string>
     <string name="mod_movedSelected">Auswahl verschoben.</string>
     <string name="mod_undo_N">Rückgängig: {0}</string>
