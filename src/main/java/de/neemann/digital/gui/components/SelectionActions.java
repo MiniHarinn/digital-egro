@@ -36,7 +36,7 @@ import static de.neemann.digital.draw.shapes.GenericShape.SIZE;
  * aligning or evenly spacing them. The shortcuts follow Figma.
  */
 public final class SelectionActions {
-    private enum Mode {LEFT, RIGHT, TOP, BOTTOM, CENTER_H, CENTER_V, SPACE_H, SPACE_V, TRANSPOSE}
+    private enum Mode {LEFT, RIGHT, TOP, BOTTOM, CENTER_H, CENTER_V, SPACE_H, SPACE_V, TRANSPOSE, REVERSE}
 
     private final CircuitComponent circuitComponent;
 
@@ -80,6 +80,7 @@ public final class SelectionActions {
         menu.add(action(Lang.get("menu_spaceV"), Mode.SPACE_V, KeyEvent.VK_V, true));
         menu.addSeparator();
         menu.add(action(Lang.get("menu_transpose"), Mode.TRANSPOSE, KeyEvent.VK_T, false));
+        menu.add(action(Lang.get("menu_reverse"), Mode.REVERSE, KeyEvent.VK_R, false));
         return menu;
     }
 
@@ -120,6 +121,10 @@ public final class SelectionActions {
             return;
         if (mode == Mode.TRANSPOSE) {
             transpose(sel);
+            return;
+        }
+        if (mode == Mode.REVERSE) {
+            reverse(sel);
             return;
         }
 
@@ -184,15 +189,16 @@ public final class SelectionActions {
         return (int) Math.round(d / SIZE) * SIZE;
     }
 
-    // turns a row into a column and vice versa, the order and the gaps are kept
-    private void transpose(Vector[] sel) {
+    private ArrayList<VisualElement> selected(Vector[] sel) {
         ArrayList<VisualElement> elements = new ArrayList<>();
         for (VisualElement ve : circuitComponent.getCircuit().getElements())
             if (ve.matches(sel[0], sel[1]))
                 elements.add(ve);
-        if (elements.size() < 2)
-            return;
+        return elements;
+    }
 
+    // true if the elements are spread more horizontally than vertically
+    private static boolean isRow(ArrayList<VisualElement> elements) {
         int minX = Integer.MAX_VALUE;
         int maxX = Integer.MIN_VALUE;
         int minY = Integer.MAX_VALUE;
@@ -206,7 +212,42 @@ public final class SelectionActions {
             minY = Math.min(minY, cy);
             maxY = Math.max(maxY, cy);
         }
-        boolean isRow = maxX - minX >= maxY - minY;
+        return maxX - minX >= maxY - minY;
+    }
+
+    // reverses the order of a row or a column, the gaps are reversed as well
+    private void reverse(Vector[] sel) {
+        ArrayList<VisualElement> elements = selected(sel);
+        if (elements.size() < 2)
+            return;
+        boolean isRow = isRow(elements);
+
+        ArrayList<Item> items = new ArrayList<>();
+        for (VisualElement ve : elements)
+            items.add(new Item(ve, isRow));
+        items.sort(Comparator.comparingInt(i -> i.lo + i.hi));
+
+        int n = items.size();
+        int pos = items.get(0).lo;
+        ArrayList<Vector> moves = new ArrayList<>();
+        elements.clear();
+        for (int k = 0; k < n; k++) {
+            Item i = items.get(n - 1 - k);
+            int d = toGrid(pos - i.lo);
+            elements.add(i.ve);
+            moves.add(isRow ? new Vector(d, 0) : new Vector(0, d));
+            if (k < n - 1)
+                pos += i.hi - i.lo + items.get(n - 1 - k).lo - items.get(n - 2 - k).hi;
+        }
+        apply(sel, elements, moves);
+    }
+
+    // turns a row into a column and vice versa, the order and the gaps are kept
+    private void transpose(Vector[] sel) {
+        ArrayList<VisualElement> elements = selected(sel);
+        if (elements.size() < 2)
+            return;
+        boolean isRow = isRow(elements);
 
         // old main axis: x for a row, new main axis: y for a row
         ArrayList<Item> oldMain = new ArrayList<>();

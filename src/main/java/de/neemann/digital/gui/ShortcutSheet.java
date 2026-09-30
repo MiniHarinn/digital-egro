@@ -98,6 +98,7 @@ public final class ShortcutSheet {
         row(alt + "+H / V", Lang.get("shortcut_alignCenter"), true);
         row(alt + "+Shift+H / V", Lang.get("shortcut_space"), true);
         row(alt + "+T", Lang.get("menu_transpose"), true);
+        row(alt + "+R", Lang.get("menu_reverse"), true);
         row("R", Lang.get("menu_rotate"), false);
         row("Del", Lang.get("menu_delete"), false);
         row("+ / -", Lang.get("shortcut_plusMinus"), false);

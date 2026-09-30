@@ -1773,6 +1773,7 @@ Sind evtl. die Namen der Variablen nicht eindeutig?</string>
     <string name="hint_run">Strg+R: Simulation beenden</string>
     <string name="menu_transpose">Zeile / Spalte vertauschen</string>
     <string name="msg_alignWouldConnect">Nicht verschoben: würde andere Leitung verbinden</string>
+    <string name="menu_reverse">Reihenfolge umkehren</string>
     <string name="mod_insertedIntoWire">In Leitung eingefügt.</string>
     <string name="mod_movedSelected">Auswahl verschoben.</string>
     <string name="mod_undo_N">Rückgängig: {0}</string>

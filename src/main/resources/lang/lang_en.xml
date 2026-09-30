@@ -1755,6 +1755,7 @@
     <string name="hint_run">Ctrl+R: stop simulation</string>
     <string name="menu_transpose">Transpose row / column</string>
     <string name="msg_alignWouldConnect">Not moved: it would connect to another wire</string>
+    <string name="menu_reverse">Reverse order</string>
     <string name="mod_insertedIntoWire">Inserted into wire.</string>
     <string name="mod_movedSelected">Selection moved.</string>
     <string name="mod_undo_N">Undo: {0}</string>
