@@ -280,6 +280,16 @@ public final class Main extends JFrame implements ClosingWindowListener.ConfirmS
                 }
             }
         }.setToolTip(Lang.get("menu_help_elements_tt")).createJMenuItem());
+        ToolTipAction shortcuts = new ToolTipAction(Lang.get("menu_shortcuts")) {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                ShortcutSheet.show(Main.this);
+            }
+        }.setToolTip(Lang.get("menu_shortcuts_tt"));
+        helpMenu.add(shortcuts.createJMenuItemNoIcon());
+        // only in the circuit, a menu accelerator would also catch a '?' typed into a text field
+        circuitComponent.getInputMap().put(KeyStroke.getKeyStroke('?'), shortcuts);
+        circuitComponent.getActionMap().put(shortcuts, shortcuts);
         new DocumentationLocator().addMenuTo(helpMenu);
         helpMenu.addSeparator();
         helpMenu.add(InfoDialog.getInstance().createMenuItem(this, MESSAGE));

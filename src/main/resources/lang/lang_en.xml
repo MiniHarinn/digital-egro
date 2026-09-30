@@ -2017,6 +2017,27 @@
     <string name="menu_find_tt">Finds labels, net names and pin numbers.</string>
     <string name="menu_componentPalette">Quick insert...</string>
     <string name="menu_componentPalette_tt">Search for a component by name and attach it to the mouse. Can also be opened with the Tab key.</string>
+    <string name="menu_shortcuts">Keyboard shortcuts</string>
+    <string name="menu_shortcuts_tt">Shows the keyboard shortcuts of the editor. Can also be opened with the ? key.</string>
+    <string name="msg_shortcutsOnlyHere">Only in this version, not in the original Digital.</string>
+    <string name="shortcut_palette">Search a component and attach it to the mouse</string>
+    <string name="shortcut_insertLast">Insert the last inserted component again</string>
+    <string name="shortcut_tunnel">Insert a tunnel</string>
+    <string name="shortcut_pipetteCopy">Insert a copy of the component under the mouse</string>
+    <string name="shortcut_pipette">Insert the component under the mouse with default settings</string>
+    <string name="shortcut_duplicate">Duplicate the selection</string>
+    <string name="shortcut_drag">drag</string>
+    <string name="shortcut_altDrag">Drag a copy of a component or of the selection</string>
+    <string name="shortcut_selectAll">Select everything</string>
+    <string name="shortcut_nudge">Move the selection by one grid step, with Shift by five</string>
+    <string name="shortcut_plusMinus">More or fewer inputs, or change the value of a constant</string>
+    <string name="shortcut_program">Program a diode or a fuse, or toggle a switch</string>
+    <string name="shortcut_escape">Cancel the current action</string>
+    <string name="shortcut_splitWire">Split the wire under the mouse</string>
+    <string name="shortcut_flipWire">While drawing a wire: flip its corner</string>
+    <string name="shortcut_diagWire">While drawing a wire: switch between straight and diagonal</string>
+    <string name="shortcut_saveView">Save the current view</string>
+    <string name="shortcut_restoreView">Go back to a saved view</string>
 
     <string name="menu_tutorial">Start Tutorial</string>
     <string name="menu_tutorial_tt">Starts the beginner tutorial.</string>

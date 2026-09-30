@@ -2035,6 +2035,27 @@ Sind evtl. die Namen der Variablen nicht eindeutig?</string>
     <string name="menu_find_tt">Durchsucht Bezeichnungen, Netznamen und Pinnummern.</string>
     <string name="menu_componentPalette">Schnell einfügen...</string>
     <string name="menu_componentPalette_tt">Sucht ein Bauteil anhand seines Namens und hängt es an die Maus. Kann auch mit der Tab-Taste geöffnet werden.</string>
+    <string name="menu_shortcuts">Tastenkürzel</string>
+    <string name="menu_shortcuts_tt">Zeigt die Tastenkürzel des Editors. Kann auch mit der Taste ? geöffnet werden.</string>
+    <string name="msg_shortcutsOnlyHere">Nur in dieser Version, nicht im originalen Digital.</string>
+    <string name="shortcut_palette">Ein Bauteil suchen und an die Maus hängen</string>
+    <string name="shortcut_insertLast">Das zuletzt eingefügte Bauteil erneut einfügen</string>
+    <string name="shortcut_tunnel">Einen Tunnel einfügen</string>
+    <string name="shortcut_pipetteCopy">Eine Kopie des Bauteils unter der Maus einfügen</string>
+    <string name="shortcut_pipette">Das Bauteil unter der Maus mit Standardeinstellungen einfügen</string>
+    <string name="shortcut_duplicate">Die Auswahl duplizieren</string>
+    <string name="shortcut_drag">Ziehen</string>
+    <string name="shortcut_altDrag">Eine Kopie eines Bauteils oder der Auswahl ziehen</string>
+    <string name="shortcut_selectAll">Alles auswählen</string>
+    <string name="shortcut_nudge">Die Auswahl um einen Rasterschritt verschieben, mit Umschalt um fünf</string>
+    <string name="shortcut_plusMinus">Mehr oder weniger Eingänge, oder den Wert einer Konstanten ändern</string>
+    <string name="shortcut_program">Eine Diode oder Sicherung programmieren, oder einen Schalter umschalten</string>
+    <string name="shortcut_escape">Die aktuelle Aktion abbrechen</string>
+    <string name="shortcut_splitWire">Die Leitung unter der Maus auftrennen</string>
+    <string name="shortcut_flipWire">Beim Zeichnen einer Leitung: die Ecke umklappen</string>
+    <string name="shortcut_diagWire">Beim Zeichnen einer Leitung: zwischen gerade und diagonal wechseln</string>
+    <string name="shortcut_saveView">Die aktuelle Ansicht speichern</string>
+    <string name="shortcut_restoreView">Zu einer gespeicherten Ansicht zurückkehren</string>
 
     <string name="menu_tutorial">Tutorial starten</string>
     <string name="menu_tutorial_tt">Startet das Anfänger-Tutorial.</string>
