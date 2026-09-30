@@ -106,6 +106,9 @@ public final class ShortcutSheet {
         row("D", Lang.get("shortcut_diagWire"), false);
         row(Lang.get("shortcut_dropOnWire"), Lang.get("shortcut_dropOnWire_tt"), true);
 
+        section(Lang.get("menu_sim"));
+        row(ctrl + "+R", Lang.get("shortcut_startStop"), true);
+
         section(Lang.get("menu_view"));
         row("F1", Lang.get("menu_maximize"), false);
         row(ctrl + "+Plus", Lang.get("menu_zoomIn"), false);

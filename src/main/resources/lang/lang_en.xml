@@ -2041,6 +2041,7 @@
     <string name="shortcut_dropOnWire_tt">Place a component with an input and an output on a wire to insert it into the wire</string>
     <string name="shortcut_saveView">Save the current view</string>
     <string name="shortcut_restoreView">Go back to a saved view</string>
+    <string name="shortcut_startStop">Start or stop the simulation (Space in the original Digital)</string>
 
     <string name="menu_tutorial">Start Tutorial</string>
     <string name="menu_tutorial_tt">Starts the beginner tutorial.</string>

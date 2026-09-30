@@ -1196,7 +1196,8 @@ public final class Main extends JFrame implements ClosingWindowListener.ConfirmS
             }
         }.setToolTip(Lang.get("menu_showDataGraph_tt")).setEnabledChain(false);
 
-        circuitComponent.getInputMap().put(KeyStroke.getKeyStroke(' '), KEY_START_STOP_ACTION);
+        // Ctrl+R instead of the space bar of the original, which starts the simulation too easily by accident
+        circuitComponent.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_R, ToolTipAction.getCTRLMask()), KEY_START_STOP_ACTION);
         circuitComponent.getActionMap().put(KEY_START_STOP_ACTION, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
