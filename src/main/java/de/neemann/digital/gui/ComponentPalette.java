@@ -5,6 +5,7 @@
  */
 package de.neemann.digital.gui;
 
+import de.neemann.digital.draw.elements.Tunnel;
 import de.neemann.digital.draw.library.ElementLibrary;
 import de.neemann.digital.draw.library.LibraryNode;
 import de.neemann.digital.draw.shapes.ShapeFactory;
@@ -407,6 +408,8 @@ public final class ComponentPalette {
     private final class EntryRenderer extends JPanel implements ListCellRenderer<Entry> {
         private final JLabel nameLabel;
         private final JLabel categoryLabel;
+        private final JLabel keyLabel;
+        private final String lastInserted;
         private final int iconSize;
 
         private EntryRenderer() {
@@ -418,8 +421,30 @@ public final class ComponentPalette {
             nameLabel.setIconTextGap(fs / 2);
             categoryLabel = new JLabel();
             categoryLabel.setFont(Screen.getInstance().getFont(0.85f));
+            keyLabel = new JLabel();
+            keyLabel.setFont(Screen.getInstance().getFont(0.8f));
+            JPanel east = new JPanel(new BorderLayout(fs / 2, 0));
+            east.setOpaque(false);
+            east.add(categoryLabel, BorderLayout.CENTER);
+            east.add(keyLabel, BorderLayout.EAST);
             add(nameLabel, BorderLayout.CENTER);
-            add(categoryLabel, BorderLayout.EAST);
+            add(east, BorderLayout.EAST);
+
+            InsertAction last = insertHistory.getLastInsertAction();
+            lastInserted = last == null ? null : last.getName();
+        }
+
+        /**
+         * The shortcuts which insert a component without the palette.
+         * They are shown so that they can be learned, they also work in the original Digital.
+         */
+        private String getShortcut(Entry entry) {
+            String name = entry.node.getName();
+            if (name.equals(Tunnel.DESCRIPTION.getName()))
+                return "T";
+            if (name.equals(lastInserted))
+                return "L";
+            return null;
         }
 
         @Override
@@ -427,6 +452,17 @@ public final class ComponentPalette {
             nameLabel.setText(entry.name);
             nameLabel.setIcon(new SlotIcon(entry.getIcon(iconSize), iconSize));
             categoryLabel.setText(entry.category);
+            String key = getShortcut(entry);
+            keyLabel.setVisible(key != null);
+            if (key != null) {
+                keyLabel.setText(key);
+                Color c = isSelected ? list.getSelectionForeground() : Color.GRAY;
+                int fs = Screen.getInstance().getFontSize();
+                keyLabel.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(c),
+                        BorderFactory.createEmptyBorder(0, fs / 3, 0, fs / 3)));
+                keyLabel.setForeground(c);
+            }
 
             Color bg = isSelected ? list.getSelectionBackground() : list.getBackground();
             Color fg = isSelected ? list.getSelectionForeground() : list.getForeground();
