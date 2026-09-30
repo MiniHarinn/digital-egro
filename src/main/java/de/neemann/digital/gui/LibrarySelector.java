@@ -27,6 +27,7 @@ public class LibrarySelector implements LibraryListener {
     private JMenu componentsMenu;
     private InsertHistory insertHistory;
     private CircuitComponent circuitComponent;
+    private ToolTipAction paletteAction;
 
     /**
      * Creates a new library selector.
@@ -58,9 +59,26 @@ public class LibrarySelector implements LibraryListener {
         return componentsMenu;
     }
 
+    /**
+     * Sets the action which opens the component palette.
+     * The action is shown as the first entry of the components menu.
+     *
+     * @param paletteAction the action
+     */
+    public void setPaletteAction(ToolTipAction paletteAction) {
+        this.paletteAction = paletteAction;
+        if (componentsMenu != null)
+            libraryChanged(null);
+    }
+
     @Override
     public void libraryChanged(LibraryNode node) {
         componentsMenu.removeAll();
+
+        if (paletteAction != null) {
+            componentsMenu.add(paletteAction.createJMenuItem());
+            componentsMenu.addSeparator();
+        }
 
         for (LibraryNode n : library.getRoot())
             addComponents(componentsMenu, n);

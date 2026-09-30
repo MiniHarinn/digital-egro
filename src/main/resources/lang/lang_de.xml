@@ -49,6 +49,8 @@
     <string name="elem_Help_outputs">Ausgänge</string>
     <string name="elem_Help_attributes">Veränderbare Attribute</string>
     <string name="msg_search">Suche</string>
+    <string name="msg_componentPaletteSearch">Bauteil suchen...</string>
+    <string name="msg_componentPaletteNoMatch">Keine passenden Bauteile</string>
     <string name="msg_errorPastingData">Fehler beim Einfügen von Daten!</string>
 
     <!-- logik -->
@@ -2031,6 +2033,8 @@ Sind evtl. die Namen der Variablen nicht eindeutig?</string>
 
     <string name="menu_find">Suchen</string>
     <string name="menu_find_tt">Durchsucht Bezeichnungen, Netznamen und Pinnummern.</string>
+    <string name="menu_componentPalette">Schnell einfügen...</string>
+    <string name="menu_componentPalette_tt">Sucht ein Bauteil anhand seines Namens und hängt es an die Maus.</string>
 
     <string name="menu_tutorial">Tutorial starten</string>
     <string name="menu_tutorial_tt">Startet das Anfänger-Tutorial.</string>

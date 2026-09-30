@@ -244,6 +244,17 @@ public final class Main extends JFrame implements ClosingWindowListener.ConfirmS
         library.addListener(insertHistory);
         final LibrarySelector librarySelector = new LibrarySelector(library, shapeFactory);
         library.addListener(librarySelector);
+
+        ComponentPalette componentPalette = new ComponentPalette(this, library, shapeFactory, insertHistory, circuitComponent);
+        ToolTipAction showPalette = new ToolTipAction(Lang.get("menu_componentPalette")) {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (circuitComponent.isShowing())
+                    componentPalette.show();
+            }
+        }.setToolTip(Lang.get("menu_componentPalette_tt")).setAcceleratorCTRLplus('K');
+        // the accelerator of the menu item makes the shortcut work in the whole window
+        librarySelector.setPaletteAction(showPalette);
         menuBar.add(librarySelector.buildMenu(insertHistory, circuitComponent));
 
         menuBar.add(WindowManager.getInstance().registerAndCreateMenu(this));
