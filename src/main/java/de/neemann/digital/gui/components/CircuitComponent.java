@@ -1851,7 +1851,9 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
                 Vector p = getPosVector(e);
                 if (pos == null)
                     pos = p;
-                if (pressedElement != null && pressedElement.equalsDescription(DummyElement.RECTDESCRIPTION))
+                if (pressedElement != null && downButton.isAltDown() && !isLocked())
+                    mouseInsertList.activateDragCopy(new ArrayList<>(Collections.singletonList(new VisualElement(pressedElement))), pos);
+                else if (pressedElement != null && pressedElement.equalsDescription(DummyElement.RECTDESCRIPTION))
                     mouseResizeRect.activate(pressedElement, pos);
                 else
                     mouseSelect.activate(pos, p);
@@ -2341,6 +2343,7 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
         private Vector corner2;
         private boolean wasReleased;
         private boolean moveOnDragging;
+        private boolean copyOnDragging;
 
         private MouseControllerSelect(Cursor cursor) {
             super(cursor);
@@ -2385,13 +2388,16 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
         @Override
         void pressed(MouseEvent e) {
             moveOnDragging = mouse.isPrimaryClick(e);
+            copyOnDragging = moveOnDragging && e.isAltDown();
         }
 
         @Override
         boolean dragged(MouseEvent e) {
             if (wasReleased) {
                 if (moveOnDragging) {
-                    if (!isLocked())
+                    if (copyOnDragging && !isLocked())
+                        mouseInsertList.activateDragCopy(getSelectedElements(library.getShapeFactory()), getPosVector(e));
+                    else if (!isLocked())
                         mouseMoveSelected.activate(corner1, corner2, getPosVector(e));
                 } else
                     return false;
@@ -2556,15 +2562,28 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
     private final class MouseControllerInsertCopied extends MouseController {
         private ArrayList<Movable> elements;
         private Vector lastPos;
+        private Vector dragStartPos; // only set if the copies are dragged by an Alt+drag
 
         private MouseControllerInsertCopied(Cursor cursor) {
             super(cursor);
+        }
+
+        // Alt+drag: the copies start exactly on top of the originals and are dropped when the mouse is released
+        private void activateDragCopy(ArrayList<Movable> elements, Vector pos) {
+            super.activate();
+            removeHighLighted();
+            this.elements = Settings.getInstance().get(Keys.SETTINGS_RENAME_LABELS)
+                    ? new CopiedElementLabelRenamer(getCircuit(), elements).rename() : elements;
+            lastPos = pos;
+            dragStartPos = pos;
+            rotateAction.setEnabled(true);
         }
 
         private void activate(ArrayList<Movable> elements, Vector pos) {
             super.activate();
             this.elements = elements;
             lastPos = pos;
+            dragStartPos = null;
 
             Vector max = null;
             for (Movable m : elements)
@@ -2629,8 +2648,31 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
         }
 
         @Override
+        boolean dragged(MouseEvent e) {
+            if (dragStartPos != null)
+                moved(e);
+            return dragStartPos != null;
+        }
+
+        @Override
+        void released(MouseEvent e) {
+            if (dragStartPos != null) {
+                // a copy released without being moved would sit invisibly on top of its original
+                if (!lastPos.equals(dragStartPos))
+                    insertElements();
+                mouseNormal.activate();
+            }
+        }
+
+        @Override
         void clicked(MouseEvent e) {
-            if (elements != null && mouse.isPrimaryClick(e)) {
+            if (mouse.isPrimaryClick(e))
+                insertElements();
+            mouseNormal.activate();
+        }
+
+        private void insertElements() {
+            if (elements != null) {
                 Modifications.Builder<Circuit> builder = new Modifications.Builder<>(Lang.get("mod_insertCopied"));
                 ArrayList<Wire> wires = new ArrayList<>();
                 for (Movable m : elements) {
@@ -2642,7 +2684,6 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
                 builder.add(ModifyInsertWires.create(wires));
                 modify(builder.build());
             }
-            mouseNormal.activate();
         }
 
         @Override
