@@ -39,6 +39,9 @@ public final class SelectionActions {
     private enum Mode {LEFT, RIGHT, TOP, BOTTOM, CENTER_H, CENTER_V, SPACE_H, SPACE_V, TRANSPOSE, REVERSE}
 
     private final CircuitComponent circuitComponent;
+    // the selection and the elements of the last arrangement, so that repeating it uses the same elements
+    private Vector[] lastSelection;
+    private ArrayList<VisualElement> lastElements;
 
     private SelectionActions(CircuitComponent circuitComponent) {
         this.circuitComponent = circuitComponent;
@@ -130,9 +133,8 @@ public final class SelectionActions {
 
         boolean horizontal = mode == Mode.LEFT || mode == Mode.RIGHT || mode == Mode.CENTER_H || mode == Mode.SPACE_H;
         ArrayList<Item> items = new ArrayList<>();
-        for (VisualElement ve : circuitComponent.getCircuit().getElements())
-            if (ve.matches(sel[0], sel[1]))
-                items.add(new Item(ve, horizontal));
+        for (VisualElement ve : selected(sel))
+            items.add(new Item(ve, horizontal));
 
         boolean space = mode == Mode.SPACE_H || mode == Mode.SPACE_V;
         if (items.size() < (space ? 3 : 2))
@@ -190,6 +192,9 @@ public final class SelectionActions {
     }
 
     private ArrayList<VisualElement> selected(Vector[] sel) {
+        // after an arrangement the selection may cover further elements, which must not be included
+        if (Arrays.equals(sel, lastSelection) && circuitComponent.getCircuit().getElements().containsAll(lastElements))
+            return new ArrayList<>(lastElements);
         ArrayList<VisualElement> elements = new ArrayList<>();
         for (VisualElement ve : circuitComponent.getCircuit().getElements())
             if (ve.matches(sel[0], sel[1]))
@@ -277,15 +282,16 @@ public final class SelectionActions {
 
     private void apply(Vector[] sel, ArrayList<VisualElement> elements, ArrayList<Vector> moves) {
         ModifyAlign modification = new ModifyAlign();
-        Vector min = sel[0];
-        Vector max = sel[1];
+        Vector min = null;
+        Vector max = null;
         for (int n = 0; n < elements.size(); n++) {
             VisualElement ve = elements.get(n);
             Vector delta = moves.get(n);
             modification.add(ve, delta);
             GraphicMinMax mm = ve.getMinMax(false);
-            min = Vector.min(min, mm.getMin().add(delta));
-            max = Vector.max(max, mm.getMax().add(delta));
+            // the new selection fits exactly around the arranged elements
+            min = min == null ? mm.getMin().add(delta) : Vector.min(min, mm.getMin().add(delta));
+            max = max == null ? mm.getMax().add(delta) : Vector.max(max, mm.getMax().add(delta));
         }
         if (modification.isEmpty())
             return;
@@ -296,6 +302,8 @@ public final class SelectionActions {
         }
         circuitComponent.modify(modification);
         circuitComponent.setSelection(min, max);
+        lastSelection = circuitComponent.getSelection();
+        lastElements = new ArrayList<>(elements);
     }
 
     // True if a moved pin or wire end would touch another wire or pin, which would connect them.
