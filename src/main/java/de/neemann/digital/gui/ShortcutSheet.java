@@ -108,6 +108,9 @@ public final class ShortcutSheet {
 
         section(Lang.get("menu_sim"));
         row(ctrl + "+R", Lang.get("shortcut_startStop"), true);
+        row("F8", Lang.get("menu_runTests"), false);
+        row(ctrl + "+T", Lang.get("menu_runTests"), true);
+        row("F11", Lang.get("menu_runAllTests"), false);
 
         section(Lang.get("menu_view"));
         row("F1", Lang.get("menu_maximize"), false);

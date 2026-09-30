@@ -1163,6 +1163,9 @@ public final class Main extends JFrame implements ClosingWindowListener.ConfirmS
                 startTests();
             }
         }.setToolTip(Lang.get("menu_runTests_tt")).setAccelerator("F8");
+        // additionally to F8, next to Ctrl+R which starts the simulation
+        circuitComponent.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_T, ToolTipAction.getCTRLMask()), runTests);
+        circuitComponent.getActionMap().put(runTests, runTests);
 
         ToolTipAction runAllTests = new ToolTipAction(Lang.get("menu_runAllTests")) {
             @Override
