@@ -200,6 +200,8 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
                 redo();
             }
         }.setToolTipProvider(this::getRedoToolTip).setToolTip(Lang.get("menu_redo_tt")).setAcceleratorCTRLplus('Y').enableAcceleratorIn(this);
+        // Ctrl+Shift+Z is the redo shortcut used by most other applications
+        getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ToolTipAction.getCTRLMask() | InputEvent.SHIFT_DOWN_MASK), redoAction);
 
         new ToolTipAction("Escape") {
             @Override
