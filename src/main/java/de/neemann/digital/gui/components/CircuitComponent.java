@@ -96,7 +96,6 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
         ATTR_LIST.add(Keys.RECOVER_FROM_OSCILLATION);
     }
 
-
     /**
      * @return returns the list of circuit attributes
      */
@@ -104,6 +103,8 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
         return ATTR_LIST;
     }
 
+    /** Property changed when the editing mode changes, the new value is the name of the mode */
+    public static final String MOUSE_MODE = "mouseMode";
     private static final String DEL_ACTION = "myDelAction";
     private static final int MOUSE_BORDER_SMALL = 10;
     private static final int MOUSE_BORDER_LARGE = 50;
@@ -529,7 +530,6 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
         return elements;
     }
 
-
     /**
      * Opens the attribute editor
      */
@@ -918,7 +918,6 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
         graphicHasChanged();
     }
 
-
     private BufferedImage buffer;
 
     @Override
@@ -1132,7 +1131,6 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
             double sx = ((double) getWidth() - pad) / (delta.x + SIZE * 2);
             double sy = ((double) getHeight() - pad) / (delta.y + SIZE * 2);
             double s = Math.min(sx, sy);
-
 
             newTrans.setToScale(s, s);  // set Scaling
 
@@ -1711,6 +1709,7 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
             if (activeMouseController != null && activeMouseController != this)
                 activeMouseController.deactivate();
             activeMouseController = this;
+            firePropertyChange(MOUSE_MODE, null, getClass().getSimpleName());
             shallowCopy = null;
             deleteAction.setEnabled(false);
             copyAction.setEnabled(false);
@@ -1762,7 +1761,6 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
         public void escapePressed() {
         }
     }
-
 
     private SearchResult getVisualElement(Vector pos, boolean includeText) {
         List<VisualElement> list = getCircuit().getElementListAt(pos, includeText);

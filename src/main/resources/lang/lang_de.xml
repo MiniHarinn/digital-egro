@@ -1762,6 +1762,15 @@ Sind evtl. die Namen der Variablen nicht eindeutig?</string>
     <string name="shortcut_align">Links / rechts / oben / unten ausrichten</string>
     <string name="shortcut_alignCenter">Horizontal / vertikal zentrieren</string>
     <string name="shortcut_space">Horizontal / vertikal gleichmäßig verteilen</string>
+    <string name="hint_normal">Tab: Bauteile · L: letztes · T: Tunnel · ?: alle Tastenkürzel</string>
+    <string name="hint_wire">Klick: setzen · D: diagonal · F: Ecke umklappen · Esc: beenden</string>
+    <string name="hint_wireDiag">Klick: setzen · D: gerade · Esc: beenden</string>
+    <string name="hint_insert">R: drehen · Auf Leitung ablegen zum Einfügen · Esc: abbrechen</string>
+    <string name="hint_move">Klick: ablegen · R: drehen · Entf: löschen · Esc: abbrechen</string>
+    <string name="hint_select">Ziehen: verschieben · Alt+Ziehen: duplizieren · Pfeile: schieben · Alt+A/D/W/S: ausrichten · Entf: löschen</string>
+    <string name="hint_moveSelected">R: drehen · Esc: abbrechen</string>
+    <string name="hint_moveWire">Klick: ablegen · Entf: löschen · Esc: abbrechen</string>
+    <string name="hint_run">Strg+R: Simulation beenden</string>
     <string name="mod_insertedIntoWire">In Leitung eingefügt.</string>
     <string name="mod_movedSelected">Auswahl verschoben.</string>
     <string name="mod_undo_N">Rückgängig: {0}</string>

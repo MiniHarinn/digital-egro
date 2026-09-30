@@ -213,7 +213,10 @@ public final class Main extends JFrame implements ClosingWindowListener.ConfirmS
 
         statusLabel = new JLabel(" ");
         statusLabel.setBorder(BorderFactory.createEmptyBorder(0, Screen.getInstance().getFontSize() * 2 / 3, 0, 0));
-        getContentPane().add(statusLabel, BorderLayout.SOUTH);
+        JPanel statusBar = new JPanel(new BorderLayout());
+        statusBar.add(statusLabel, BorderLayout.CENTER);
+        statusBar.add(new KeyHints(circuitComponent), BorderLayout.EAST);
+        getContentPane().add(statusBar, BorderLayout.SOUTH);
 
         setupStates();
 
