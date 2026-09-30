@@ -408,6 +408,17 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
             }
         }.setAcceleratorCTRLplus("Q").enableAcceleratorIn(this);
 
+        int[][] nudges = {{KeyEvent.VK_LEFT, -1, 0}, {KeyEvent.VK_RIGHT, 1, 0}, {KeyEvent.VK_UP, 0, -1}, {KeyEvent.VK_DOWN, 0, 1}};
+        for (int[] n : nudges)
+            for (int steps : new int[]{1, 5}) // Shift moves further
+                new ToolTipAction("nudge" + n[0] + "_" + steps) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (activeMouseController instanceof MouseControllerSelect)
+                            ((MouseControllerSelect) activeMouseController).nudge(new Vector(n[1], n[2]).mul(SIZE * steps));
+                    }
+                }.setAccelerator(KeyStroke.getKeyStroke(n[0], steps == 1 ? 0 : InputEvent.SHIFT_DOWN_MASK)).enableAcceleratorIn(this);
+
         ToolTipAction plus = new PlusMinusAction(this, library, 1).setAccelerator("PLUS").enableAcceleratorIn(this);
         getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ADD, 0), plus);
 
@@ -2396,6 +2407,17 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
                 updateHighlighting();
             }
             return true;
+        }
+
+        // moves the selected elements with the arrow keys, the selection stays active
+        private void nudge(Vector delta) {
+            if (wasReleased && !isLocked()) {
+                Vector min = Vector.min(corner1, corner2);
+                modify(new ModifyMoveSelected(min, Vector.max(corner1, corner2), delta, 0, min));
+                corner1 = corner1.add(delta);
+                corner2 = corner2.add(delta);
+                updateHighlighting();
+            }
         }
 
         private void updateHighlighting() {
