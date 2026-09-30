@@ -230,6 +230,7 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
         }.setAccelerator("S").enableAcceleratorIn(this);
 
         createAdditionalShortcuts(shapeFactory);
+        LabelEditor.install(this, library);
 
         getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), DEL_ACTION);
         getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), DEL_ACTION);

@@ -93,6 +93,7 @@ public final class ShortcutSheet {
         row(alt + "+" + Lang.get("shortcut_drag"), Lang.get("shortcut_altDrag"), true);
         row(ctrl + "+A", Lang.get("shortcut_selectAll"), false);
         row("← ↑ → ↓", Lang.get("shortcut_nudge"), true);
+        row("F2", Lang.get("shortcut_rename"), true);
         row("R", Lang.get("menu_rotate"), false);
         row("Del", Lang.get("menu_delete"), false);
         row("+ / -", Lang.get("shortcut_plusMinus"), false);

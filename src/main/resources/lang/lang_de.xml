@@ -2059,6 +2059,7 @@ Sind evtl. die Namen der Variablen nicht eindeutig?</string>
     <string name="shortcut_dropOnWire_tt">Ein Bauteil mit Ein- und Ausgang auf einer Leitung ablegen, um es in die Leitung einzufügen</string>
     <string name="shortcut_saveView">Die aktuelle Ansicht speichern</string>
     <string name="shortcut_restoreView">Zu einer gespeicherten Ansicht zurückkehren</string>
+    <string name="shortcut_rename">Das Bauteil unter der Maus umbenennen</string>
     <string name="shortcut_startStop">Simulation starten oder stoppen (Leertaste im originalen Digital)</string>
 
     <string name="menu_tutorial">Tutorial starten</string>
