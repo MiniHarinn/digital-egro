@@ -7,7 +7,6 @@ package de.neemann.digital.gui.components;
 
 import de.neemann.digital.core.*;
 import de.neemann.digital.core.element.*;
-import de.neemann.digital.core.io.Const;
 import de.neemann.digital.core.io.In;
 import de.neemann.digital.core.io.InValue;
 import de.neemann.digital.core.io.Out;
@@ -409,10 +408,10 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
             }
         }.setAcceleratorCTRLplus("Q").enableAcceleratorIn(this);
 
-        ToolTipAction plus = new PlusMinusAction(1).setAccelerator("PLUS").enableAcceleratorIn(this);
+        ToolTipAction plus = new PlusMinusAction(this, library, 1).setAccelerator("PLUS").enableAcceleratorIn(this);
         getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ADD, 0), plus);
 
-        ToolTipAction minus = new PlusMinusAction(-1).setAccelerator("MINUS").enableAcceleratorIn(this);
+        ToolTipAction minus = new PlusMinusAction(this, library, -1).setAccelerator("MINUS").enableAcceleratorIn(this);
         getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_SUBTRACT, 0), minus);
 
         new ToolTipAction(Lang.get("menu_programDiode")) {
@@ -1458,7 +1457,10 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
         modify(builder.build());
     }
 
-    private VisualElement getActualVisualElement() {
+    /**
+     * @return the element which is moved, or the element under the mouse, null if there is none
+     */
+    VisualElement getActualVisualElement() {
         if (activeMouseController instanceof MouseControllerMoveElement)
             mouseNormal.activate();
 
@@ -1589,37 +1591,6 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
      */
     public boolean getPresentationMode() {
         return presentationMode;
-    }
-
-    private final class PlusMinusAction extends ToolTipAction {
-        private final int delta;
-
-        private PlusMinusAction(int delta) {
-            super("plusMinus");
-            this.delta = delta;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (!isLocked()) {
-                VisualElement ve = getActualVisualElement();
-                if (ve != null) {
-                    try {
-                        if (library.getElementType(ve.getElementName()).hasAttribute(Keys.INPUT_COUNT)) {
-                            int number = ve.getElementAttributes().get(Keys.INPUT_COUNT) + delta;
-                            if (number >= Keys.INPUT_COUNT.getMin() && number <= Keys.INPUT_COUNT.getMax())
-                                modify(new ModifyAttribute<>(ve, Keys.INPUT_COUNT, number));
-                        } else if (ve.equalsDescription(Const.DESCRIPTION)) {
-                            long v = ve.getElementAttributes().get(Keys.VALUE) + delta;
-                            v &= Bits.mask(ve.getElementAttributes().getBits());
-                            modify(new ModifyAttribute<>(ve, Keys.VALUE, v));
-                        }
-                    } catch (ElementNotFoundException e1) {
-                        // do nothing on error
-                    }
-                }
-            }
-        }
     }
 
     private class MouseDispatcher extends MouseAdapter implements MouseMotionListener {
