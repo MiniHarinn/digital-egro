@@ -8,6 +8,8 @@ package de.neemann.digital.gui.components;
 import de.neemann.digital.core.element.ElementAttributes;
 import de.neemann.digital.core.element.Key;
 import de.neemann.digital.draw.elements.VisualElement;
+import de.neemann.digital.draw.graphics.GraphicMinMax;
+import de.neemann.digital.draw.graphics.Vector;
 import de.neemann.digital.gui.Main;
 import de.neemann.digital.lang.Lang;
 import de.neemann.gui.ErrorMessage;
@@ -20,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,6 +49,7 @@ public class AttributeDialog extends JDialog {
     private HashMap<Key, JCheckBox> checkBoxes;
     private JComponent topMostTextComponent;
     private VisualElement visualElement;
+    private Rectangle beside;
     private boolean okPressed = false;
 
     /**
@@ -233,6 +237,53 @@ public class AttributeDialog extends JDialog {
     }
 
     /**
+     * Opens the dialog next to the visual element set by {@link #setVisualElement(VisualElement)},
+     * so that the element stays visible while it is edited.
+     *
+     * @param circuitComponent the component showing the element
+     * @param transform        the transformation from circuit to component coordinates
+     * @return this for chained calls
+     */
+    public AttributeDialog setBeside(JComponent circuitComponent, AffineTransform transform) {
+        if (visualElement != null && circuitComponent.isShowing()) {
+            GraphicMinMax mm = visualElement.getMinMax(true);
+            Vector min = mm.getMin();
+            Vector max = mm.getMax();
+            beside = transform.createTransformedShape(new Rectangle(min.x, min.y, max.x - min.x, max.y - min.y)).getBounds();
+            Point p = circuitComponent.getLocationOnScreen();
+            beside.translate(p.x, p.y);
+        }
+        return this;
+    }
+
+    private boolean placeBeside() {
+        if (beside == null)
+            return false;
+        Rectangle screen = getScreenBounds(new Point((int) beside.getCenterX(), (int) beside.getCenterY()));
+        if (screen == null)
+            return false;
+        int gap = Screen.getInstance().getFontSize();
+        int x = beside.x + beside.width + gap;
+        if (x + getWidth() > screen.x + screen.width) {
+            x = beside.x - gap - getWidth();
+            if (x < screen.x)
+                return false; // no room on either side
+        }
+        // Screen.setLocation keeps the dialog on the screen
+        Screen.setLocation(this, new Point(x, (int) beside.getCenterY() - getHeight() / 2), false);
+        return true;
+    }
+
+    private static Rectangle getScreenBounds(Point p) {
+        for (GraphicsDevice d : GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()) {
+            Rectangle b = d.getDefaultConfiguration().getBounds();
+            if (b.contains(p))
+                return b;
+        }
+        return null;
+    }
+
+    /**
      * Sets the dialogs title
      *
      * @param title the dialogs title
@@ -340,7 +391,7 @@ public class AttributeDialog extends JDialog {
 
         if (pos == null)
             setLocationRelativeTo(parent);
-        else
+        else if (!placeBeside())
             Screen.setLocation(this, pos, true);
 
         if (topMostTextComponent != null)

@@ -1263,7 +1263,7 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
                 SwingUtilities.convertPointToScreen(p, CircuitComponent.this);
                 AttributeDialog attributeDialog = new AttributeDialog(parent, p, list, element.getElementAttributes())
                         .setDialogTitle(elementType.getTranslatedName())
-                        .setVisualElement(element);
+                        .setVisualElement(element).setBeside(CircuitComponent.this, transform);
                 if (elementType instanceof ElementTypeDescriptionCustom) {
                     attributeDialog.addButton(Lang.get("attr_openCircuitLabel"), new ToolTipAction(Lang.get("attr_openCircuit")) {
                         @Override
