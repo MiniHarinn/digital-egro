@@ -251,6 +251,23 @@ inputs.digital-egro.inputs.nixpkgs.follows = "nixpkgs";
 Then either use `inputs.digital-egro.packages.${pkgs.system}.default` directly, or add
 `inputs.digital-egro.overlays.default` to `nixpkgs.overlays` and use `pkgs.digital-egro`.
 
+### Syncing with the original Digital ###
+
+`master` holds this fork, the `upstream` branch is an unmodified copy of the master branch of
+[hneemann/Digital](https://github.com/hneemann/Digital). Changes from upstream are merged, never rebased,
+so the history of `master` is never rewritten and pinned flake inputs stay valid:
+
+```
+git remote add upstream https://github.com/hneemann/Digital.git   # once
+git fetch upstream
+git branch -f upstream upstream/master && git push origin upstream
+git checkout master && git merge upstream/master
+nix build && git push
+```
+
+`git log upstream..master` lists the changes of this fork. Do not use GitHub's "Sync fork" button on
+`master`, it may offer to discard the commits of this fork.
+
 If a dependency in `pom.xml` changes, set `mvnHash` in `nix/package.nix` to `lib.fakeHash`,
 run `nix build` and copy the correct hash from the error message.
 
