@@ -153,6 +153,7 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
     private CircuitScrollPanel circuitScrollPanel;
     private TutorialListener tutorialListener;
     private boolean toolTipHighlighted = false;
+    private Net highlightedNet;
     private NetList toolTipNetList;
     private String lastUsedTunnelName;
     private boolean presentationMode;
@@ -643,11 +644,6 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
 
     @Override
     public String getToolTipText(MouseEvent event) {
-        if (toolTipHighlighted) {
-            toolTipHighlighted = false;
-            removeHighLighted();
-        }
-
         Circuit circuit = getCircuitOrShallowCopy();
 
         Vector pos = getPosVector(event);
@@ -677,27 +673,35 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
             ObservableValue v = w.getValue();
             if (v != null)
                 return v.getValueString();
-            else {
-                if (Settings.getInstance().get(Keys.SETTINGS_WIRETOOLTIP))
-                    if (highLighted == null || highLighted.isEmpty() || toolTipHighlighted) {
-                        try {
-                            if (toolTipNetList == null)
-                                toolTipNetList = new NetList(getCircuit());
-                            Net n = toolTipNetList.getNetOfPos(w.p1);
-                            if (n != null) {
-                                removeHighLighted();
-                                addHighLighted(n.getWires());
-                                highLightStyle = Style.NET_HIGHLIGHT;
-                                toolTipHighlighted = true;
-                            }
-                        } catch (PinException e) {
-                            e.printStackTrace();
-                        }
-                    }
-            }
         }
 
         return null;
+    }
+
+    // highlights the net of the wire at the given position while editing, without waiting for the tool tip delay
+    private void highlightNetAt(Vector pos) {
+        Circuit circuit = getCircuitOrShallowCopy();
+        Wire w = pos == null || circuit.getElementAt(pos) != null ? null : circuit.getWireAt(pos, (int) (SIZE2 / transform.getScaleX()));
+        Net net = null;
+        if (w != null && w.getValue() == null && Settings.getInstance().get(Keys.SETTINGS_WIRETOOLTIP)
+                && (highLighted.isEmpty() || toolTipHighlighted))
+            try {
+                if (toolTipNetList == null)
+                    toolTipNetList = new NetList(getCircuit());
+                net = toolTipNetList.getNetOfPos(w.p1);
+            } catch (PinException e) {
+                e.printStackTrace();
+            }
+        if (net != null && net == highlightedNet && toolTipHighlighted)
+            return; // nothing changed, avoid the repaint
+        if (toolTipHighlighted)
+            removeHighLighted();
+        toolTipHighlighted = net != null;
+        highlightedNet = net;
+        if (net != null) {
+            addHighLighted(net.getWires());
+            highLightStyle = Style.NET_HIGHLIGHT;
+        }
     }
 
     private String createPinToolTip(Pin p) {
@@ -1649,10 +1653,7 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
 
         @Override
         public void mouseMoved(MouseEvent e) {
-            if (toolTipHighlighted) {
-                removeHighLighted();
-                toolTipHighlighted = false;
-            }
+            highlightNetAt(activeMouseController == mouseNormal ? getPosVector(e) : null);
             lastMousePos = new Vector(e.getX(), e.getY());
 
             if (getCircuit().getAttributes().get(Keys.IS_GENERIC)) {
