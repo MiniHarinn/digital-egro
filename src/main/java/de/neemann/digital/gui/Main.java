@@ -990,6 +990,12 @@ public final class Main extends JFrame implements ClosingWindowListener.ConfirmS
         edit.add(SelectionActions.install(circuitComponent));
         edit.add(insertAsNew.createJMenuItem());
         edit.add(find.createJMenuItem());
+        edit.add(new ToolTipAction(Lang.get("menu_tunnels")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TunnelManager.show(Main.this, circuitComponent);
+            }
+        }.setToolTip(Lang.get("menu_tunnels_tt")).createJMenuItem());
         edit.addSeparator();
         edit.add(editSettings.createJMenuItem());
     }

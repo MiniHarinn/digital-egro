@@ -1756,6 +1756,12 @@
     <string name="menu_transpose">Transpose row / column</string>
     <string name="msg_alignWouldConnect">Not moved: it would connect to another wire</string>
     <string name="menu_reverse">Reverse order</string>
+    <string name="menu_tunnels">Tunnels / net names</string>
+    <string name="menu_tunnels_tt">Lists all net names of the tunnels. Select one to see its tunnels and wires, edit it to rename all its tunnels at once.</string>
+    <string name="msg_tunnelsHint">Select: highlight · Double-click: rename all · ⚠: only one tunnel</string>
+    <string name="msg_tunnelsCount">Tunnels</string>
+    <string name="msg_tunnelsMerge_N">The net name "{0}" is already used. Renaming connects both nets. Continue?</string>
+    <string name="mod_tunnelsRenamed_N_N">Renamed net "{0}" to "{1}".</string>
     <string name="mod_insertedIntoWire">Inserted into wire.</string>
     <string name="mod_movedSelected">Selection moved.</string>
     <string name="mod_undo_N">Undo: {0}</string>
