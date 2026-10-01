@@ -173,6 +173,7 @@ public final class EditorFactory {
         private final JComponent compToAdd;
         private final UndoManager undoManager;
         private JPopupMenu popup;
+        private JComboBox<String> netNames;
 
         public StringEditor(String value, Key<String> key) {
             if (key instanceof Key.LongString) {
@@ -209,6 +210,12 @@ public final class EditorFactory {
                 this.compToAdd = scrollPane;
 
                 setLabelAtTop(true);
+            } else if (key == Keys.NETNAME) {
+                // a drop down offering the net names already used, filled when the dialog is known
+                netNames = new JComboBox<>();
+                netNames.setEditable(true);
+                text = addF1Traversal((JTextField) netNames.getEditor().getEditorComponent());
+                compToAdd = netNames;
             } else {
                 text = addF1Traversal(new JTextField(10));
                 compToAdd = text;
@@ -273,6 +280,14 @@ public final class EditorFactory {
 
         @Override
         public JComponent getComponent(ElementAttributes attr) {
+            if (netNames != null && netNames.getItemCount() == 0) {
+                Main main = getAttributeDialog() == null ? null : getAttributeDialog().getMain();
+                String value = text.getText();
+                for (String name : TunnelNames.of(main == null ? null : main.getCircuitComponent().getCircuit()))
+                    netNames.addItem(name);
+                netNames.setMaximumRowCount(15);
+                netNames.setSelectedItem(value);
+            }
             return compToAdd;
         }
 

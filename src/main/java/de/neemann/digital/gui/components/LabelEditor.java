@@ -70,7 +70,7 @@ final class LabelEditor {
         }
 
         String old = ve.getElementAttributes().get(key);
-        showPopup(tunnel ? Lang.get("key_NetName") : Lang.get("key_Label"), old, newValue -> {
+        showPopup(tunnel ? Lang.get("key_NetName") : Lang.get("key_Label"), old, tunnel, newValue -> {
             if (!newValue.equals(old))
                 circuitComponent.modify(new ModifyAttribute<>(ve, key, newValue));
         });
@@ -80,19 +80,21 @@ final class LabelEditor {
         void apply(String value);
     }
 
-    private void showPopup(String caption, String value, Apply apply) {
+    private void showPopup(String caption, String value, boolean netNames, Apply apply) {
         Window owner = SwingUtilities.getWindowAncestor(circuitComponent);
         JDialog dialog = new JDialog(owner, Dialog.ModalityType.MODELESS);
         dialog.setUndecorated(true);
 
         int fs = Screen.getInstance().getFontSize();
-        JTextField field = new JTextField(value, 14);
+        // for a tunnel the net names already used are offered in a drop down
+        JComboBox<String> comboBox = netNames ? TunnelNames.createComboBox(circuitComponent.getCircuit(), value) : null;
+        JTextField field = comboBox == null ? new JTextField(value, 14) : (JTextField) comboBox.getEditor().getEditorComponent();
         JPanel panel = new JPanel(new BorderLayout(fs / 2, 0));
         panel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(UIManager.getColor("Separator.foreground")),
                 BorderFactory.createEmptyBorder(fs / 3, fs / 2, fs / 3, fs / 2)));
         panel.add(new JLabel(caption), BorderLayout.WEST);
-        panel.add(field, BorderLayout.CENTER);
+        panel.add(comboBox == null ? field : comboBox, BorderLayout.CENTER);
         dialog.setContentPane(panel);
 
         boolean[] closed = {false};
