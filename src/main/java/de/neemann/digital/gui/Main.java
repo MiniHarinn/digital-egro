@@ -2219,6 +2219,8 @@ public final class Main extends JFrame implements ClosingWindowListener.ConfirmS
         } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException e) {
             e.printStackTrace();
         }
+        if (Screen.isLinux())
+            ToggleIcons.install();
         ToolTipManager.sharedInstance().setDismissDelay(10000);
         URL.setURLStreamHandlerFactory(ElementHelpDialog.createURLStreamHandlerFactory());
 
